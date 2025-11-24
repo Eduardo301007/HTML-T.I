@@ -17,8 +17,9 @@
     }
     div
         {
-            display: grid;
+            display: inline;
             justify-content: center;
+            text-align: center;
             position: relative;
             float: right;
             background-color: rgb(218, 218, 218);        
@@ -27,28 +28,18 @@
             box-shadow: 5px 5px 15px rgb(140, 140, 140);
         }
 
-        p
-        {
-            display: grid;
-
-            bottom: 20vh;
-            right: 30vw;
-        }
-
 
         #btn_comprar{
-            position: absolute;
-            bottom: 10vh;  
-            text-align: center;
+
             font-size: large;
-            height: 40px;
-            width: 30vw;
+            padding: 10px 100px;
             border: none;
             border-radius: 100px;
             transition: 0.7s;
         }
         #btn_comprar:hover{
             background-color: rgb(255, 76, 76);
+            color: white;
             transform: scale(1.02);
         }
 
@@ -72,26 +63,85 @@
             background-color: rgb(255, 76, 76);
             transform: scale(1.02);
         }
+
+        #remover_btn
+        {
+            position: absolute;
+            top: 10vh;  
+            left: 2px;
+            text-align: center;
+            font-size: large;
+            height: 40px;
+            width: 100px;
+            border: none;
+            border-radius: 3px;
+            transition: 0.5s;
+            background-color: black;
+            color: white;
+        }
+        #remover_btn:hover
+        {
+            background-color: rgb(255, 76, 76);
+            transform: scale(1.02);
+        }
+
+        #preco
+        {
+            margin-top: 500px;
+            font-size: 1.5rem;
+            color: rgb(255, 35, 35);
+        }
     </style>
 </head>
 <body>
-    <div id="div_geral">
-        <button id="btn_comprar">Comprar</button>
-        <div id="seila"></div>
-        <p>Preço Final: </p>
-    </div>
+       
+        <div id="div_geral"></div>      
+
+    <button id="remover_btn">Remover</button>
 
     <a href="index.html"><button id="btn_voltar">⬅</button></a>
 
     <script>
         const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-            const container = document.getElementById('seila');
+        const container = document.getElementById('div_geral');
+        const btn_remover = document.getElementById("remover_btn");
+    
+        let soma = 0;
+    
+        carrinho.forEach(produto => {
+            // cria um elemento para mostrar cada item
 
-            carrinho.forEach(produto => {
-            const item = document.createElement("p");
+            const item = document.createElement('p');
+            item.className = "item_carrinho";
             item.textContent = `${produto.nome} - R$ ${produto.valor}`;
             container.appendChild(item);
-            });
+    
+            // soma os valores
+            soma += produto.valor;
+        });
+
+        const precoFinal = document.createElement('p');
+        precoFinal.id = "preco";
+        container.appendChild(precoFinal);
+        precoFinal.textContent = `Preço Final: R$ ${soma}`;
+
+        const btn_comprar = document.createElement('button');
+        btn_comprar.id = "btn_comprar";
+        container.appendChild(btn_comprar);
+        btn_comprar.textContent = 'Comprar';
+
+        // função para remover o último item do carrinho
+        btn_remover.addEventListener("click", () => {
+            divs_itens = document.querySelectorAll(".item_carrinho");
+            if (carrinho.length > 0) {
+                const removido = carrinho.pop(); // remove o último item
+                soma -= removido.valor; // subtrai o valor do item removido
+                divs_itens[divs_itens.length -1].remove(); // remove o último elemento do container
+                precoFinal.textContent = `Preço Final: R$ ${soma}`; // atualiza o preço final
+                localStorage.setItem('carrinho', JSON.stringify(carrinho)); // atualiza o localStorage
+            }
+        });
     </script>
+    
 </body>
 </html>

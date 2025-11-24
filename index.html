@@ -46,7 +46,7 @@
 
     nav a:hover
     {
-        color: yellow;
+        color: rgb(0, 255, 162)
     }
 
     #procurar{
@@ -88,7 +88,8 @@
 
     button:hover
     {
-        background-color: rgb(255, 79, 79);
+        background-color: rgb(0, 255, 162);
+        color: black;
     }
     .geral
     {
@@ -133,6 +134,17 @@
 
 .btn_adicionar_carrinho {
     margin-top: auto;              /* empurra o botão para o fim da caixa */
+}
+
+#btn_buscar{
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(0, 255, 162);
+    color: black;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 </style>
@@ -201,6 +213,32 @@
 
         })
         .catch(err => console.error("Erro ao carregar produtos:", err));
+
+            const barra = document.getElementById("procurar");
+            
+
+            barra.addEventListener("input", () => {
+                const termo = document.getElementById("procurar").value.toLowerCase();
+                const itens = document.querySelectorAll(".itens");
+
+                const div = document.querySelector(".geral");
+            itens.forEach((item, index) => {
+                const nomeProduto = item.querySelector("h2").textContent.toLowerCase();
+                if (nomeProduto.includes(termo)) {
+                    item.style.display = "flex";
+                } 
+                else
+                {
+                    item.style.display = "none";
+                }
+            });
+            
+            });
+            
+
+
+            
+
     });
     </script>
 </body>
