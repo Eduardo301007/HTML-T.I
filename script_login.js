@@ -17,7 +17,6 @@ const connection = mysql.createConnection({
   database: 'eletrônicos'
 });
 
-// Rota de login
 app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
@@ -28,14 +27,44 @@ app.post('/login', (req, res) => {
       if (err) return res.status(500).json({ error: 'Erro no servidor' });
 
       if (results.length > 0) {
-        res.json({ message: 'Login bem-sucedido' });
-      } else {
+        const usuario = results[0];
+        res.json({
+          message: 'Login bem-sucedido',
+          nome: usuario.Nome,
+          email: usuario.email,
+          senha: usuario.senha,
+          telefone: usuario.Telefone
+        });
+      } 
+      else {
         res.json({ message: 'Email ou senha incorretos' });
       }
     }
   );
 });
 
+app.get('/produtos', (req, res) => {
+  connection.query('SELECT * FROM produto', (err, results2) => {
+    if (err) return res.status(500).json({ error: 'Erro ao buscar produtos' });
+
+    const produtos = results2.map(p => ({
+      id_produto: p.id_produto,
+      nome: p.nome,
+      valor: p.valor,
+      descricao: p.descrição,
+      foto: p.foto ? Buffer.from(p.foto).toString('base64') : null
+    }));
+
+    console.log(produtos);
+    res.json(produtos);
+  });
+});
+
+
+
 app.listen(3000, () => {
   console.log('Servidor rodando em http://localhost:3000');
 });
+
+
+

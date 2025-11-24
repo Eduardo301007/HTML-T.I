@@ -98,28 +98,43 @@
         gap: 40px;  
     }
 
-    .itens
-    {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;    
-        background-color: rgb(255, 255, 255);
-        width: 350px;
-        height: 450px;   
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 5px 5px 15px  gray;
-        transition: 0.6s;
-    }
+    .itens {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;   /* começa de cima */
+    align-items: center;           /* centraliza horizontalmente */
+    background-color: #fff;
+    width: 350px;
+    height: 550px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px gray;
+    transition: 0.6s;
+    overflow: hidden;              /* impede que conteúdo ultrapasse a caixa */
+}
 
-    .itens:hover{
-        transform: scale(1.05);
-    }
+.itens img {
+    max-width: 100%;
+    max-height: 250px;             /* limita a altura da imagem */
+    object-fit: cover;             /* mantém proporção sem distorcer */
+    border-radius: 5px;
+}
 
-    .btn_adicionar_carrinho
-    {
-        margin-top: auto;
-    }
+.itens h2, .itens p {
+    text-align: center;
+    word-wrap: break-word;         /* quebra palavras longas */
+    margin: 5px 0;
+}
+
+.preco{
+    color: rgb(255, 72, 72);
+    font-size: 2rem;
+}
+
+.btn_adicionar_carrinho {
+    margin-top: auto;              /* empurra o botão para o fim da caixa */
+}
+
 </style>
 
 </head>
@@ -127,45 +142,67 @@
     <nav>
         <h1>Zentro</h1>
         <input type="text" id="procurar" placeholder="Procurar">
-        <a href="lista_desejos.html">Lista de desejos❤️</a>
         <a href="mailto:edu.ferreira3010@gmail.com">Contato</a>
         <a href="carrinho.html">Carrinho</a>
         <a href="usuario.html">Usuário</a>
-
     </nav>
-    <header>
-        
-    </header>
+
+    <header></header>
 
     <main>
-        <div class="geral">
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-            <div class="itens" style="margin-bottom: 100px;"><button class="btn_adicionar_carrinho">Adicionar ao carrinho</button></div>
-        </div>
-        
+        <!-- Aqui os produtos vão aparecer -->
+        <div class="geral" id="lista-produtos"></div>
     </main>
 
     <script>
-
-    document.addEventListener('DOMContentLoaded', () =>
-    {
-        const btns = document.querySelectorAll(".btn_adicionar_carrinho");
-
-        btns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            alert("Produto adicionado ao carrinho!");
-        });
-        });
+      document.addEventListener("DOMContentLoaded", () => {
         
-    });     
+        fetch("/produtos")
+        .then(res => res.json())
+        .then(produtos => {
+          const lista = document.getElementById("lista-produtos");
+          lista.innerHTML = "";
+
+          produtos.forEach(produto => {
+            const div = document.createElement("div");
+            div.classList.add("itens");
+
+            const imgSrc = produto.foto 
+              ? `data:image/webp;base64,${produto.foto}` 
+              : "placeholder.webp";
+
+            div.innerHTML = `
+              <img src="${imgSrc}" alt="${produto.nome}">
+              <h2>${produto.nome}</h2>
+              <p>${produto.descricao}</p>
+              <p class='preco'>R$ ${produto.valor}</p>
+              <button class="btn_adicionar_carrinho">Adicionar ao carrinho</button>
+            `;
+
+            lista.appendChild(div);
+          });
+
+          document.querySelectorAll(".btn_adicionar_carrinho").forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                const produtoSelecionado = produtos[index];
+
+                // pega carrinho atual ou cria vazio
+                let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+                // adiciona produto
+                carrinho.push(produtoSelecionado);
+
+                // salva de volta
+                localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+                alert("Produto adicionado ao carrinho!");
+            });
+            });
+
+        })
+        .catch(err => console.error("Erro ao carregar produtos:", err));
+    });
     </script>
 </body>
+
 </html>

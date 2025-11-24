@@ -17,7 +17,7 @@
     }
     div
         {
-            display: flex;
+            display: grid;
             justify-content: center;
             position: relative;
             float: right;
@@ -29,7 +29,8 @@
 
         p
         {
-            position: absolute;
+            display: grid;
+
             bottom: 20vh;
             right: 30vw;
         }
@@ -76,9 +77,21 @@
 <body>
     <div id="div_geral">
         <button id="btn_comprar">Comprar</button>
+        <div id="seila"></div>
         <p>Preço Final: </p>
     </div>
 
     <a href="index.html"><button id="btn_voltar">⬅</button></a>
+
+    <script>
+        const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const container = document.getElementById('seila');
+
+            carrinho.forEach(produto => {
+            const item = document.createElement("p");
+            item.textContent = `${produto.nome} - R$ ${produto.valor}`;
+            container.appendChild(item);
+            });
+    </script>
 </body>
 </html>
