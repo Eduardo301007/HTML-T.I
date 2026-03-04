@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Loja</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Momo+Trust+Display&display=swap');
+
+
+    body, h1, h2, p
+    {
+        font-family: "Momo Trust Display", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        margin: 0;
+        padding: 0;           
+    }
+
+    h1
+    {
+        margin-right: auto;
+        font-size: 3rem;
+        color: rgb(0, 255, 162);
+        right: auto;
+    }
+
+    nav{
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        gap: 30px;   
+        padding: 20px 20px;
+        background-color: black;
+        
+    }
+
+    nav a{    
+        text-decoration: none;
+        color: white; 
+        font-size: 1.3rem;
+        transition: 0.5s;
+    }
+
+    nav a:hover
+    {
+        color: rgb(0, 255, 162)
+    }
+
+    #procurar{
+        display: flex;
+        justify-content: center;
+        width: 450px;
+        height: 35px;
+        border: none;
+        border-radius: 3px;
+    }
+
+    #procurar:placeholder-shown{
+        font-size: 1.3rem;
+    }
+
+    header, footer
+    {
+        display: flex;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        align-items: center;
+        padding: 20px;
+    }
+
+
+    button
+    {
+        margin-top: 40px;
+        padding: 12px 50px;
+        border: none;
+        border-radius: 10px;
+        transition: 0.5s;
+        font-size: 1.5rem;
+        font-family: "Playfair Display", serif;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover
+    {
+        background-color: rgb(0, 255, 162);
+        color: black;
+    }
+    .geral
+    {
+        display: flex;          
+        flex-wrap: wrap;        
+        justify-content: center;
+        gap: 40px;  
+    }
+
+    .itens {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;   /* começa de cima */
+    align-items: center;           /* centraliza horizontalmente */
+    background-color: #fff;
+    width: 350px;
+    height: 550px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px gray;
+    transition: 0.6s;
+    overflow: hidden;              /* impede que conteúdo ultrapasse a caixa */
+}
+
+.itens img {
+    max-width: 100%;
+    max-height: 250px;             /* limita a altura da imagem */
+    object-fit: cover;             /* mantém proporção sem distorcer */
+    border-radius: 5px;
+}
+
+.itens h2, .itens p {
+    text-align: center;
+    word-wrap: break-word;         /* quebra palavras longas */
+    margin: 5px 0;
+}
+
+.preco{
+    color: rgb(255, 72, 72);
+    font-size: 2rem;
+}
+
+.btn_adicionar_carrinho {
+    margin-top: auto;              /* empurra o botão para o fim da caixa */
+}
+
+#btn_buscar{
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(0, 255, 162);
+    color: black;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+</style>
+
+</head>
+<body>
+    <nav>
+        <h1>Zentro</h1>
+        <input type="text" id="procurar" placeholder="Procurar">
+        <a href="mailto:edu.ferreira3010@gmail.com">Contato</a>
+        <a href="carrinho.html">Carrinho</a>
+        <a href="usuario.html">Usuário</a>
+    </nav>
+
+    <header></header>
+
+    <main>
+        <!-- Aqui os produtos vão aparecer -->
+        <div class="geral" id="lista-produtos"></div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        
+        fetch("/produtos")
+        .then(res => res.json())
+        .then(produtos => {
+          const lista = document.getElementById("lista-produtos");
+          lista.innerHTML = "";
+
+          produtos.forEach(produto => {
+            const div = document.createElement("div");
+            div.classList.add("itens");
+
+            const imgSrc = produto.foto 
+              ? `data:image/webp;base64,${produto.foto}` 
+              : "placeholder.webp";
+
+            div.innerHTML = `
+              <img src="${imgSrc}" alt="${produto.nome}">
+              <h2>${produto.nome}</h2>
+              <p>${produto.descricao}</p>
+              <p class='preco'>R$ ${produto.valor}</p>
+              <button class="btn_adicionar_carrinho">Adicionar ao carrinho</button>
+            `;
+
+            lista.appendChild(div);
+          });
+
+          document.querySelectorAll(".btn_adicionar_carrinho").forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                const produtoSelecionado = produtos[index];
+
+                // pega carrinho atual ou cria vazio
+                let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+                // adiciona produto
+                carrinho.push(produtoSelecionado);
+
+                // salva de volta
+                localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+                alert("Produto adicionado ao carrinho!");
+            });
+            });
+
+        })
+        .catch(err => console.error("Erro ao carregar produtos:", err));
+
+            const barra = document.getElementById("procurar");
+            
+
+            barra.addEventListener("input", () => {
+                const termo = document.getElementById("procurar").value.toLowerCase();
+                const itens = document.querySelectorAll(".itens");
+
+                const div = document.querySelector(".geral");
+            itens.forEach((item, index) => {
+                const nomeProduto = item.querySelector("h2").textContent.toLowerCase();
+                if (nomeProduto.includes(termo)) {
+                    item.style.display = "flex";
+                } 
+                else
+                {
+                    item.style.display = "none";
+                }
+            });
+            
+            });
+            
+
+
+            
+
+    });
+    </script>
+</body>
+
+</html>
