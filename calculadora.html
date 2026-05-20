@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Porcentagem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <button class="btn_nav" id="btn_principal">Porcentagem de um valor</button>
+        <button class="btn_nav" id="btnnav2">Aumento em %</button>
+        <button class="btn_nav" id="btnnav3">Diminuição em %</button>
+        <button class="btn_nav" id="btnnav4">Valor x é quanto % de valor y?</button>
+    </nav>
+    <div id="div_principal">
+        <h1>Porcentagem de um valor</h1>
+        <span style="display: flex; align-items: center; gap: 5px;">
+            <input id='porcentagem1' type= "number" style="width: auto;">
+            <p>%</p>
+        </span>     
+        <p>de</p>
+        <input id='valor1' type= "number">
+        <input type="text"placeholder='Resultado' id="resultado1" disabled>
+        <button class='btn_calcular' id="btn_calcular1">Calcular</button>
+        <button class='limpeza' id="btn_limpar1">Limpar</button>
+    </div>
+    <div id="div2">
+
+        <h1>Aumento em %</h1>
+        <p>De</p>
+        <input id='porcentagem2' type= "number">
+        <p>foi para</p>
+        <input id='valor2' type= "number">
+        <input type="text"placeholder='Aumento percentual' id="resultado2" disabled>
+        <button class='btn_calcular' id="btn_calcular2">Calcular</button>
+        <button class='limpeza' id="btn_limpar2">Limpar</button>
+
+    </div>
+    <div id="div3">
+        <h1>Diminuição em %</h1>
+        <p>De</p>
+        <input id='porcentagem3' type= "number">
+        <p>foi para</p>
+        <input id='valor3' type= "number">
+        <input type="text"placeholder='Diminuição percentual' id="resultado3" disabled>
+        <button class='btn_calcular' id="btn_calcular3">Calcular</button>
+        <button class='limpeza' id="btn_limpar3">Limpar</button>
+    </div>
+    
+    <div id="div4">
+        <h1>Valor x é quanto % de valor y?</h1>
+        <p>O valor</p>
+        <input id='porcentagem4' type= "number">
+        <p>é qual porcentagem de</p>
+        <input id='valor4' type= "number">
+        <input type="text"placeholder='Resultado' id="resultado4" disabled>
+        <button class='btn_calcular' id="btn_calcular4">Calcular</button>
+        <button class='limpeza' id="btn_limpar4">Limpar</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

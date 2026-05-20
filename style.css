@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Oswald:wght@200..700&family=Righteous&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "SN Pro", sans-serif;
+    background-color: #f5f5f7; /* Um fundo leve para destacar os cards */
+}
+
+/* Garante que o padding não quebre o tamanho dos elementos */
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+nav {
+    display: flex; /* Adicionado para o gap e alinhamento funcionarem */
+    justify-content: center;
+    align-items: center;
+    gap: 15px;   
+    background-color: black;
+    height: 50%;
+    color: white;
+    padding: 10px;
+    flex-wrap: wrap; /* Faz os botões irem para a linha de baixo se não couberem */
+}
+
+.btn_nav {
+    background: none;
+    color: white;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#btn_principal {
+    border-bottom: 3px solid #007bff;
+}
+
+div {
+    /* Removido o height fixo de 50vh para evitar que o conteúdo transborde no celular */
+    min-height: 50vh; 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: white;
+    padding: 30px 20px;
+    max-width: 500px; /* Transforma a div num "card" elegante no desktop */
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#div2, #div3, #div4 {
+    display: none;
+}
+
+h1 {
+    font-size: 1.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%; /* Ocupa a largura total do container */
+    max-width: 280px;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+input::placeholder {
+    font-size: 1rem;
+}
+
+p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+    text-align: center;
+    width: 100%; /* Força o texto explicativo a ficar sozinho na linha no celular */
+}
+
+/* Estilo geral dos botões de ação */
+button {
+    margin: 10px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+    transition: 0.3s;
+    width: 100%; /* Botão largo, muito mais fácil de clicar no celular */
+    max-width: 280px;
+}
+
+.btn_calcular:hover {
+    background-color: #0056b3;
+}
+
+.limpeza {
+    background-color: rgb(255, 200, 0);
+    color: black;
+}
+
+.limpeza:hover {
+    background-color: orange;
+}
+
+/* ==========================================================================
+   MEDIA QUERY: Ajustes finos para telas de celular (até 600px de largura)
+   ========================================================================== */
+@media (max-width: 600px) {
+    nav {
+        gap: 5px;
+    }
+
+    .btn_nav {
+        font-size: 0.95rem; /* Diminui um pouco o texto para caber lado a lado */
+        padding: 10px 5px;
+        flex: 1 1 30%; /* Faz os botões se distribuírem melhor */
+        text-align: center;
+    }
+
+    div {
+        margin: 15px; /* Tira as margens grandes e deixa o card colado nas bordas */
+        padding: 20px 15px;
+        min-height: auto; /* Deixa o tamanho livre baseado no conteúdo */
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input, button {
+        max-width: 100%; /* Ocupa toda a largura disponível da tela do celular */
+    }
+}
