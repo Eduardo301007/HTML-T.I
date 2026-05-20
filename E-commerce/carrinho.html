@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+
+    <style>
+    
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Momo+Trust+Display&display=swap');
+    
+
+    body{
+        font-family: "Momo Trust Display", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+    div
+        {
+            display: inline;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            float: right;
+            background-color: rgb(218, 218, 218);        
+            width: 40vw;
+            height: 100vh;
+            box-shadow: 5px 5px 15px rgb(140, 140, 140);
+        }
+
+
+        #btn_comprar{
+
+            font-size: large;
+            padding: 10px 100px;
+            border: none;
+            border-radius: 100px;
+            transition: 0.7s;
+        }
+        #btn_comprar:hover{
+            background-color: rgb(255, 76, 76);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        #btn_voltar
+        {
+            position: absolute;
+            top: 2px;  
+            left: 2px;
+            text-align: center;
+            font-size: 1.5rem;
+            width: 100px;
+            border: none;
+            border-radius: 3px;
+            transition: 0.5s;
+            background-color: black;
+            color: white;
+        }
+
+        #btn_voltar:hover
+        {
+            background-color: rgb(255, 76, 76);
+            transform: scale(1.02);
+        }
+
+        #remover_btn
+        {
+            position: absolute;
+            top: 10vh;  
+            left: 2px;
+            text-align: center;
+            font-size: large;
+            height: 40px;
+            width: 100px;
+            border: none;
+            border-radius: 3px;
+            transition: 0.5s;
+            background-color: black;
+            color: white;
+        }
+        #remover_btn:hover
+        {
+            background-color: rgb(255, 76, 76);
+            transform: scale(1.02);
+        }
+
+        #preco
+        {
+            margin-top: 500px;
+            font-size: 1.5rem;
+            color: rgb(255, 35, 35);
+        }
+    </style>
+</head>
+<body>
+       
+        <div id="div_geral"></div>      
+
+    <button id="remover_btn">Remover</button>
+
+    <a href="index.html"><button id="btn_voltar">⬅</button></a>
+
+    <script>
+        const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        const container = document.getElementById('div_geral');
+        const btn_remover = document.getElementById("remover_btn");
+    
+        let soma = 0;
+    
+        carrinho.forEach(produto => {
+
+            const item = document.createElement('p');
+            item.className = "item_carrinho";
+            item.textContent = `${produto.nome} - R$ ${produto.valor}`;
+            container.appendChild(item);
+    
+            soma += produto.valor;
+        });
+
+        const precoFinal = document.createElement('p');
+        precoFinal.id = "preco";
+        container.appendChild(precoFinal);
+        precoFinal.textContent = `Preço Final: R$ ${soma}`;
+
+        const btn_comprar = document.createElement('button');
+        btn_comprar.id = "btn_comprar";
+        container.appendChild(btn_comprar);
+        btn_comprar.textContent = 'Comprar';
+
+        btn_remover.addEventListener("click", () => {
+            divs_itens = document.querySelectorAll(".item_carrinho");
+            if (carrinho.length > 0) {
+                const removido = carrinho.pop(); 
+                soma -= removido.valor; 
+                divs_itens[divs_itens.length -1].remove(); 
+                precoFinal.textContent = `Preço Final: R$ ${soma}`; 
+                localStorage.setItem('carrinho', JSON.stringify(carrinho)); 
+            }
+        });
+
+        btn_comprar.addEventListener("click", () => {
+            if (carrinho.length > 0) 
+            {
+                alert("Compra realizada com sucesso! \n" + "Produtos comprados:\n" + carrinho.map(p => p.nome).join("\n") + `\n\nTotal pago: R$ ${soma} \n`);
+                localStorage.removeItem('carrinho'); 
+                location.reload(); 
+            } 
+            else 
+            {
+                alert("Seu carrinho está vazio!");
+            }
+        });
+    </script>
+    
+</body>
+</html>

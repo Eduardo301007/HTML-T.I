@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Momo+Trust+Display&display=swap');
+
+        body{
+            font-family: "Momo Trust Display", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+        }
+
+        #caixa_login
+        {
+            display: grid;
+            justify-content: center;
+            position: absolute;
+            background-color: rgb(235, 235, 235);
+            width: 550px;
+            height: 590px;
+            margin-top: 10rem;
+            margin: auto;
+            top: 100px;
+            left: 35%;
+            border-radius: 10px;
+            box-shadow: 5px 5px 25px rgb(109, 109, 109);
+        }
+
+        h1{
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .inputs{
+            width: 350px;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        #btn_login{
+            background-color: black;
+            color: white;
+            font-size: 1.2rem;
+            transition: 0.7s;
+        }
+        #btn_login:hover{
+            background-color: blue;
+            transform: scale(1.02);
+        }
+
+        #senha{
+            margin-right: 20px;
+        }
+
+        #mostrar{
+            width: 30px;
+            height: 30px;
+            border: 0;
+            border-radius: 5px;
+            background-image: url('icone_oculto.png');
+            background-size: contain;
+        }
+
+    </style>
+</head>
+<body>
+
+    <main>  
+        <div id="caixa_login">
+            <h1>Login</h1>
+            
+            <input class="inputs" type="email" id="email" placeholder="Email:">
+            <input class="inputs" type="password" id='senha' placeholder="Senha:">
+            <button class="inputs" id="btn_login">Login</button>
+        </div>  
+    </main>
+  
+    <script>
+       document.getElementById('btn_login').addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value;
+  const senha = document.getElementById('senha').value;
+
+  try {
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha })
+    });
+
+    const data = await response.json();
+
+    if (data.message === 'Login bem-sucedido') {
+
+      localStorage.setItem('usuario', JSON.stringify(data));
+
+      window.location.href = 'index.html';
+    } 
+    else {
+      alert('Email ou senha incorretos');
+    }
+
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    alert('Erro ao conectar com o servidor');
+  }
+});
+
+      </script>
+  </body>
+  </html>
+</html>

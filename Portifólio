@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum</title>
+
+    <style>
+        body 
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        nav 
+        {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        #salvar 
+        {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            transition: 0.3s;
+        }
+
+        #salvar:hover
+        {
+            background-color: rgb(0, 102, 255);
+        }
+
+        header 
+        {
+            display: grid;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #contato 
+        {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+        main 
+        {
+            width: 80%;
+            margin: 0;
+            padding-left: 50px;
+        }
+        main h2
+        {
+            color: rgb(0, 102, 255);
+        }
+
+        .containers
+        {
+            margin-bottom: 20px;
+            background: linear-gradient(to right, rgb(191, 0, 255), rgb(0, 157, 255));
+            color: white;
+            border-radius: 7px;
+            padding: 20px 30px;
+            box-shadow: 10px 10px 15px rgba(128, 128, 128, 0.687);
+            min-width: 90vw;
+        }
+
+        .containers button
+        {
+            padding: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(0, 38, 255);
+            color: white;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .listas
+        {
+            margin-top: 30px;
+            line-height: 30px;
+        }
+
+        .containers button:hover
+        {
+            background-color: rgb(0, 0, 0);
+            transform: scale(1.02);
+        }
+
+        .topicos_habilidades
+        {
+            background-color: rgb(255, 255, 255);
+            padding: 15px;
+            margin: 5px;
+            border-radius: 50px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button id="salvar">Salvar em pdf</button>
+    </nav>
+    <header>
+        <h1>Eduardo Santos Ferreira</h1>
+        <p style="color: rgb(75, 75, 255); font-size: larger;">Desenvolvedor de Software</p>   
+        <div id="contato">
+            <a href="mailto:edu.ferreira3010@gmail.com">edu.ferreira3010@gmail.com
+            </a>
+            <span>(11)975156798</span>
+            <a href="https://www.linkedin.com/in/eduardo-santos-183989340 ">linkedin</a>
+        </div>     
+    </header>
+    <main>
+        <h2>Perfil Profissional</h2>
+        <p>Profissional em começo de carreira com experiência moderada e grande interesse em desenvolvimento web, principalmente focado em front-end. Estou em busca de oportunidades no mercado de trabalho para colocar em prática minhas habilidades em Python, HTML, CSS e JavaScript sempre que possível. Sempre estarei disposto à aprender mais e reforçar meus conhecimentos e utilidade nesta área.</p>
+
+        <h2>Formação Acadêmica</h2>
+
+        <div class='containers'>
+            <h3>Técnico em Informática</h3>
+            <p>SENAC | Conclusão: Dez 2025</p>
+            <button id="bt_formação">Mostrar Detalhes</button>
+
+            <div class="listas" id="lista_formacao" style="display: none">
+                <ul>
+                    <li>Ensino Médio Técnico Completo</li>
+                    <li>Senac Nações Unidas</li>
+                    <li>Projetos realizados ao longo dos anos letivos</li>
+                </ul>
+            </div>   
+        </div>
+
+        <h2 style="margin-bottom: 50px;">Habilidades Técnicas</h2>
+
+        <div>
+            <span class="topicos_habilidades">HTML</span>
+            <span class="topicos_habilidades">CSS</span>
+            <span class="topicos_habilidades">JavaScript</span>
+            <span class="topicos_habilidades">Git e Github</span>
+            <span class="topicos_habilidades">Python</span>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            /*INSTANCIANDO VARIÁVEIS*/
+            const bt_salvar = document.getElementById("salvar");
+            const bt_formação = document.getElementById("bt_formação");
+            const lista_experiencias = document.getElementById("lista_experiencias");
+            const lista_formacao = document.getElementById("lista_formacao");
+
+            /*BOTÃO DE SALVAR EM PDF*/
+            bt_salvar.addEventListener("click", function() {
+            window.print();
+        });
+
+            /*BOTÃO DE FORMAÇÃO*/
+            bt_formação.addEventListener("click", function() {
+
+                if(lista_formacao.style.display == 'none'){
+                    lista_formacao.style.display = 'grid';
+                }
+
+                else{
+                    lista_formacao.style.display = 'none';
+                }
+                
+            });
+        }
+    );
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuário</title>
+
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Momo+Trust+Display&display=swap');
+        body
+        {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            justify-content: center;
+            font-family: "Momo Trust Display", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        h1{
+            display: flex;
+            justify-content: center;
+        }
+
+        h2
+        {
+            margin-bottom: 200px;
+        }
+
+        p
+        {
+            font-size: 1.5rem;
+        }
+
+        button
+        {
+            margin-top: 50px;
+            padding: 20px 80px;
+            background-color: white;
+            color: black;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid black;
+            transition: 0.7s;
+        }
+        button:hover
+        {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Usuário</h1>
+    <h2>Informações do usuário:</h2>
+    <p id="nome">Nome: </p>
+    <p id="email">Email: </p>
+    <p id="senha">Senha: </p>
+    <p id="telefone">Telefone: </p>
+
+    <a href="index.html" style="text-decoration: none;"> <button>Voltar ao site ↩️</button></a>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+        if (usuario) 
+        {
+        document.getElementById('nome').textContent += usuario.nome;
+        document.getElementById('email').textContent += usuario.email;
+        document.getElementById('senha').textContent += usuario.senha;
+        document.getElementById('telefone').textContent += usuario.telefone;
+        }
+
+    </script>
+</body>
+</html>

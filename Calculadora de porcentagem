@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Porcentagem</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Oswald:wght@200..700&family=Righteous&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            align-content: center;
+            height: 100vh;
+        }
+       
+        div {
+            height: 50vh;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.329);
+        }
+        h1
+        {
+            font-family: "SN Pro", sans-serif;
+            font-size: 2rem;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 200px;
+            padding: 2vh 3vw;
+            font-size: 1rem;
+            color: black;
+        }
+        input::placeholder {
+            font-family: "SN Pro", sans-serif;
+            font-size: 1.2rem;
+            align-content: center;
+        }
+        p {
+            font-size: 1.2rem;
+            margin: 0;
+            font-family: "SN Pro", sans-serif;
+        }
+
+        button
+        {
+            font-family: "SN Pro", sans-serif;
+            margin: 50px;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            transition: 0.5s;
+        }
+
+        button:hover
+        {
+            background-color: blue;
+        }
+
+        .limpeza
+        {
+            background-color: rgb(255, 200, 0);
+            color: black;
+            padding: 15px 40px;
+        }
+        .limpeza:hover
+        {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="div_principal">
+        <h1>Porcentagem de um valor</h1>
+        <input id='porcentagem1' type= "number">
+        <p>%</p>
+        <p>de</p>
+        <input id='valor1' type= "number">
+        <input type="text"placeholder='Resultado' id="resultado1" disabled>
+        <button id="btn_calcular1">Calcular</button>
+        <button class='limpeza' id="btn_limpar1">Limpar</button>
+    </div>
+    <div id="div2">
+        <h1>Aumento em %</h1>
+        <input id='porcentagem2' type= "number">
+        <p>foi para</p>
+        <input id='valor2' type= "number">
+        <input type="text"placeholder='Aumento percentual' id="resultado2" disabled>
+        <button id="btn_calcular2">Calcular</button>
+        <button class='limpeza' id="btn_limpar2">Limpar</button>
+    </div>
+    <div id="div3">
+        <h1>Diminuição em %</h1>
+        <input id='porcentagem3' type= "number">
+        <p>foi para</p>
+        <input id='valor3' type= "number">
+        <input type="text"placeholder='Diminuição percentual' id="resultado3" disabled>
+        <button id="btn_calcular3">Calcular</button>
+        <button class='limpeza' id="btn_limpar3">Limpar</button>
+    </div>
+
+    <script>
+        //DIV 1
+        document.getElementById('btn_calcular1').addEventListener('click', function() {
+            
+            var porcentagem = parseFloat(document.getElementById('porcentagem1').value);
+            var valor = parseFloat(document.getElementById('valor1').value);
+            var input_resultado = document.getElementById('resultado1');
+            
+            var resultado = (porcentagem / 100) * valor;
+
+            if (!isNaN(porcentagem) && !isNaN(valor)) {
+                input_resultado.value = resultado.toFixed(2);
+                
+            } 
+            else {
+                alert("Por favor, insira valores válidos.");
+            }
+        });
+
+        document.getElementById('btn_limpar1').addEventListener('click', function() {
+            document.getElementById('porcentagem1').value = '';
+            document.getElementById('valor1').value = '';
+            document.getElementById('resultado1').value = '';
+        });
+
+        //DIV 2
+        document.getElementById('btn_calcular2').addEventListener('click', function() {
+            
+            var porcentagem = parseFloat(document.getElementById('porcentagem2').value);
+            var valor = parseFloat(document.getElementById('valor2').value);
+            var input_resultado = document.getElementById('resultado2');
+            
+            var resultado = (valor - porcentagem) / porcentagem * 100;
+
+            if (!isNaN(porcentagem) && !isNaN(valor)) {
+                input_resultado.value = "Aumento de " + resultado.toFixed(2) + "%";
+            } 
+            else {
+                alert("Por favor, insira valores válidos.");
+            }
+        });
+
+        document.getElementById('btn_limpar2').addEventListener('click', function() {
+            document.getElementById('porcentagem2').value = '';
+            document.getElementById('valor2').value = '';
+            document.getElementById('resultado2').value = '';
+        });
+
+        //DIV 3
+        document.getElementById('btn_calcular3').addEventListener('click', function() {
+            
+            var porcentagem = parseFloat(document.getElementById('porcentagem3').value);
+            var valor = parseFloat(document.getElementById('valor3').value);
+            var input_resultado = document.getElementById('resultado3');
+            
+            var resultado = (porcentagem - valor) / porcentagem * 100;
+
+            if (!isNaN(porcentagem) && !isNaN(valor)) {
+                input_resultado.value = "Diminuição de " + resultado.toFixed(2) + "%";
+            } 
+            else {
+                alert("Por favor, insira valores válidos.");
+            }
+        });
+        document.getElementById('btn_limpar3').addEventListener('click', function() {
+            document.getElementById('porcentagem3').value = '';
+            document.getElementById('valor3').value = '';
+            document.getElementById('resultado3').value = '';
+        });
+    </script>
+</body>
+</html>
